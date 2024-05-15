@@ -29,7 +29,6 @@ class RatingController extends Controller
         return response()->json(['message'=>'Rating created successfully!']);
     }
 
-
     public function show(string $id)
     {
         return new RatingResource(Rating::find($id));

@@ -17,11 +17,12 @@ Route::post('logout',[AuthController::class, 'logout'])->middleware('auth:sanctu
 
 Route::middleware('auth:sanctum')->group(function (){
     Route::get('get-counts',[HomeController::class,'getCounts']);
+    Route::get('most-rated',[HomeController::class,'mostRated']);
+    Route::get('most-rated-readers',[HomeController::class,'mostRatedReaders']);
     Route::apiResource('roles',RoleController::class);
     Route::apiResource('books',BookController::class);
     Route::apiResource('genres',GenreController::class);
     Route::apiResource('ratings',RatingController::class);
-    Route::apiResource('user-interest',UserInterestController::class);
 });
 
 

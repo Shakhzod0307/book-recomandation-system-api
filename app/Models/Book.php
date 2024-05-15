@@ -22,7 +22,7 @@ class Book extends Model
         return $this->belongsTo(Genre::class);
     }
 
-    public function ratings():HasMany
+    public function ratings()
     {
         return $this->hasMany(Rating::class);
     }
