@@ -7,7 +7,6 @@ use App\Models\Book;
 use App\Http\Requests\StoreBookRequest;
 use App\Http\Requests\UpdateBookRequest;
 use App\Models\Genre;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class BookController extends Controller
@@ -47,21 +46,25 @@ class BookController extends Controller
 
     public function store(StoreBookRequest $request)
     {
-//        if ($request->hasFile('image')) {
-//            $image = $request->file('image');
-//            $imagePath = $image->store('books', 'public');
-//        }
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imagePath = $image->store('books', 'public');
+        }
+
 //        dd($request->all());
         $genre = Genre::where('category',$request->genre)->first();
-        Book::create([
+        $book = Book::create([
             'user_id'=>auth()->user()->id,
             'genre_id' => $genre->id,
             'title' => $request->title,
-            'image' =>  $request->image,
+            'image' =>  $imagePath,
             'page_number' => $request->page_number,
             'description' => $request->description,
         ]);
-        return response()->json(['message' => 'Book created successfully']);
+        return response()->json([
+            'message' => 'Book created successfully',
+            'new book'=>$book
+        ]);
 
     }
 

@@ -23,6 +23,7 @@ class BookFactory extends Factory
             'image' => 'laravel.png',
             'description' => $this->faker->paragraphs(3, true),
             'page_number' => rand(100, 900),
+//            'publication_date' => null,
         ];
     }
 }
