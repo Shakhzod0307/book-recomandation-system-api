@@ -30,12 +30,13 @@ class AuthController extends Controller
     public function register(RegisterRequest $request)
     {
         $user = User::create([
+            'role_id'=> $request->role,
             'name'=> $request->name,
             'profession'=>$request->profession,
             'email'=>$request->email,
             'password'=>Hash::make($request->password)
         ]);
-        $user->roles()->attach($request->role);
+//        $user->roles()->attach($request->role);
         UserInterest::create([
             'user_id'=>$user->id,
             'book_name'=>$request->book_name,

@@ -10,9 +10,7 @@ use Illuminate\Http\Request;
 
 class BookController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
         $books = Book::with(['user','genre'])->paginate(50);
@@ -55,7 +53,9 @@ class BookController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $book = Book::with(['genre','user','ratings'])->find($id);
+//        dd($book);
+        return view('book.show',compact('book'));
     }
 
     /**
@@ -89,6 +89,7 @@ class BookController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Book::destroy($id);
+        return redirect()->route('books.index')->with('success','Book deleted successfully!');
     }
 }

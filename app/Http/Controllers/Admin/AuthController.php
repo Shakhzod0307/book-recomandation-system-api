@@ -19,10 +19,10 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
-            if (Auth::user()->roles->contains('name','superadmin') or Auth::user()->roles->contains('name','admin') ) {
-                return redirect()->route('book.index');
-            } else {
+            if (!Auth::check()) {
                 return redirect()->back()->with('error', 'You do not have admin access.');
+            } else {
+                return redirect()->route('books.index');
             }
         } else {
             return redirect()->back()->withInput()->withErrors(['email' => 'Invalid email or password']);

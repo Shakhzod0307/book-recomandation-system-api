@@ -47,6 +47,7 @@
     <div class="flex">
         <!-- aside -->
         <aside class="flex w-72 flex-col space-y-2 border-r-2 border-gray-200 bg-white p-2"  x-show="asideOpen">
+            {{-- books--}}
             <div x-data="{ open: false }">
                 <button @click="open = !open" class="flex items-center space-x-1 rounded-md px-2 py-3 hover:bg-gray-100 hover:text-blue-600 w-full">
                     <span class="text-2xl"><i class="bx bx-file"></i></span>
@@ -58,6 +59,7 @@
                     <a href="{{route('books.create')}}" class="block px-2 py-1 hover:bg-gray-100">Add Book</a>
                 </div>
             </div>
+            {{-- genres--}}
             <div x-data="{ open: false }">
                 <button @click="open = !open" class="flex items-center space-x-1 rounded-md px-2 py-3 hover:bg-gray-100 hover:text-blue-600 w-full">
                     <span class="text-2xl"><i class="bx bx-category"></i></span>
@@ -69,15 +71,28 @@
                     <a href="{{route('genres.create')}}" class="block px-2 py-1 hover:bg-gray-100">Add Genre</a>
                 </div>
             </div>
+            {{--roles--}}
             <div x-data="{ open: false }">
                 <button @click="open = !open" class="flex items-center space-x-1 rounded-md px-2 py-3 hover:bg-gray-100 hover:text-blue-600 w-full">
-                    <span class="text-2xl"><i class="bx bx-cart"></i></span>
-                    <span>Products</span>
+                    <span class="text-2xl"><i class="bx bx-category"></i></span>
+                    <span>Roles</span>
                     <i :class="open ? 'bx bx-chevron-up' : 'bx bx-chevron-down'" class="ml-auto"></i>
                 </button>
                 <div x-show="open" x-transition class="pl-4">
-                    <a href="" class="block px-2 py-1 hover:bg-gray-100">All Products</a>
-                    <a href="" class="block px-2 py-1 hover:bg-gray-100">Add Product</a>
+                    <a href="{{route('roles.index')}}" class="block px-2 py-1 hover:bg-gray-100">All Roles</a>
+                    <a href="{{route('roles.create')}}" class="block px-2 py-1 hover:bg-gray-100">Add Role</a>
+                </div>
+            </div>
+            {{--users--}}
+            <div x-data="{ open: false }">
+                <button @click="open = !open" class="flex items-center space-x-1 rounded-md px-2 py-3 hover:bg-gray-100 hover:text-blue-600 w-full">
+                    <span class="text-2xl"><i class="bx bx-user"></i></span>
+                    <span>Users</span>
+                    <i :class="open ? 'bx bx-chevron-up' : 'bx bx-chevron-down'" class="ml-auto"></i>
+                </button>
+                <div x-show="open" x-transition class="pl-4">
+                    <a href="{{route('users.index')}}" class="block px-2 py-1 hover:bg-gray-100">All User</a>
+                    <a href="{{route('users.create')}}" class="block px-2 py-1 hover:bg-gray-100">Add User</a>
                 </div>
             </div>
         </aside>
