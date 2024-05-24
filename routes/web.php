@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\BookController;
 use App\Http\Controllers\Admin\GenreController;
+use App\Http\Controllers\Admin\RatingController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Middleware\AdminMiddleware;
@@ -18,5 +19,6 @@ Route::middleware('auth')->prefix('admin')->group(function (){
     Route::resource('genres',GenreController::class);
     Route::resource('roles',RoleController::class);
     Route::resource('users',UserController::class);
+    Route::post('post-rating',[RatingController::class,'store'])->name('store.rating');
 });
 

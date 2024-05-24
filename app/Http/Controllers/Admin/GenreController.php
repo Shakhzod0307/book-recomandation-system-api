@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreGenreRequest;
+use App\Http\Requests\UpdateGenreRequest;
 use App\Models\Genre;
 use Illuminate\Http\Request;
 
@@ -48,15 +49,19 @@ class GenreController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $genre = Genre::find($id);
+        return view('genres.edit',compact('genre'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateGenreRequest $request, string $id)
     {
-        //
+        $genre = Genre::find($id);
+        $genre->category = $request->category;
+        $genre->save();
+        return redirect()->back()->with('success','Genre updated successfully!');
     }
 
     /**

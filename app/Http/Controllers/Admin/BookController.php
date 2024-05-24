@@ -54,8 +54,27 @@ class BookController extends Controller
     public function show(string $id)
     {
         $book = Book::with(['genre','user','ratings'])->find($id);
-//        dd($book);
-        return view('book.show',compact('book'));
+        $counts =$book->ratings->count();
+        if ($counts>0) {
+            $rating5 = $book->ratings->where('rating', 5)->count();
+            $percent5 = (int)($rating5 / $counts * 100);
+            $rating4 = $book->ratings->where('rating', 4)->count();
+            $percent4 = (int)($rating4 / $counts * 100);
+            $rating3 = $book->ratings->where('rating', 3)->count();
+            $percent3 = (int)($rating3 / $counts * 100);
+            $rating2 = $book->ratings->where('rating', 2)->count();
+            $percent2 = (int)($rating2 / $counts * 100);
+            $rating1 = $book->ratings->where('rating', 1)->count();
+            $percent1 = (int)($rating1 / $counts * 100);
+        }else{
+            $percent5 =0;
+            $percent4 =0;
+            $percent3 =0;
+            $percent2 =0;
+            $percent1 =0;
+        }
+//        dd($counts,$rating5,$percent5,$rating4,$percent4,$rating3,$percent3,$rating2,$percent2,$rating1,$percent1);
+        return view('book.show',compact('book','counts','percent1','percent2','percent3','percent4','percent5'));
     }
 
     /**
