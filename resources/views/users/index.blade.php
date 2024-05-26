@@ -46,6 +46,9 @@
                                     <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                         Email
                                     </th>
+                                    <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                        Status
+                                    </th>
 
                                         <th scope="col" class="relative py-3.5 px-4">
                                             <span class="sr-only">Actions</span>
@@ -64,7 +67,7 @@
                                         @if($user->photo === null)
                                             <img class="object-cover w-8 h-8 rounded-full" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80" alt="">
                                         @else
-                                            <img class="object-cover w-8 h-8 rounded-full" src="{{$user->photo}}" alt="no image">
+                                            <img class="object-cover w-8 h-8 rounded-full" src="{{Storage::url($user->photo)}}" alt="no image">
                                         @endif
                                     </td>
                                     <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
@@ -75,15 +78,27 @@
                                     </td>
                                     <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">{{$user->profession}}</td>
                                     <td class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">{{$user->email}}</td>
+                                    <td class="px-4 py-4 text-sm  whitespace-nowrap">
+                                        <p>
+                                            @if (Cache::has('user-is-online-' . $user->id))
+                                                <time class="text-green-500">Online</time>
+                                            @else
+                                                <time class="text-yellow-500">Offline</time>
+                                            @endif
+                                        </p>
+                                    </td>
                                         <td class="px-4 py-4 text-sm whitespace-nowrap">
                                             <div class="flex items-center gap-x-6">
-                                                <button class="text-blue-500 transition-colors duration-200 hover:text-blue-700 focus:outline-none">
-                                                    Edit
-                                                </button>
-
-                                                <button class="text-red-500 transition-colors duration-200 hover:text-red-700 focus:outline-none">
-                                                    Remove
-                                                </button>
+{{--                                                <button class="text-blue-500 transition-colors duration-200 hover:text-blue-700 focus:outline-none">--}}
+{{--                                                    Edit--}}
+{{--                                                </button>--}}
+                                                <form action="{{route('users.destroy',$user->id)}}" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button class="text-red-500 transition-colors duration-200 hover:text-red-700 focus:outline-none">
+                                                        Remove
+                                                    </button>
+                                                </form>
                                             </div>
                                         </td>
                                     </tr>

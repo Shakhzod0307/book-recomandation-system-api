@@ -4,7 +4,7 @@
     <title>Admin Dashboard</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    @vite('resources/css/app.css')
+    <link href="{{ asset('css/tailwind.css') }}" rel="stylesheet">
     <script defer src="https://unpkg.com/alpinejs@3.10.2/dist/cdn.min.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css" />
 </head>
@@ -18,12 +18,22 @@
         <div>
             <button type="button" @click="profileOpen = !profileOpen" @click.outside="profileOpen = false"
                     class="h-9 w-9 overflow-hidden rounded-full">
-                <img src="{{ asset('images/find_user.png') }}" alt="plchldr.co" />
+                @if(auth()->user()->photo === null)
+                    <div class="w-7 h-7 text-center rounded-full bg-red-500 text-white font-bold">
+                        {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+                    </div>
+                @else
+                    <img class="object-cover w-8 h-8 rounded-full" src="{{Storage::url(auth()->user()->photo)}}" alt="no image">
+                @endif
             </button>
             <div class="absolute right-2 mt-1 w-48 divide-y divide-gray-200 rounded-md border border-gray-200 bg-white shadow-md"
                  x-show="profileOpen" x-transition>
                 <div class="flex items-center space-x-2 p-2">
-                    <img src="{{ asset('images/find_user.png') }}" alt="plchldr.co" class="h-9 w-9 rounded-full" />
+                    @if(auth()->user()->photo === null)
+                        <img class="object-cover w-8 h-8 rounded-full" src="{{asset('image/find_user.png')}}" alt="">
+                    @else
+                        <img class="object-cover w-8 h-8 rounded-full" src="{{Storage::url(auth()->user()->photo)}}" alt="no image">
+                    @endif
                     <div class="font-medium">{{ auth()->user()->name }}</div>
                 </div>
                 <div class="p-2">

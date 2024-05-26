@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreBookRequest;
+use App\Http\Requests\UpdateBookRequest;
 use App\Models\Book;
 use App\Models\Genre;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class BookController extends Controller
@@ -23,7 +25,8 @@ class BookController extends Controller
     public function create()
     {
         $genres = Genre::all();
-        return view('book.create',compact('genres'));
+        $authors = User::where('role_id',3)->get();
+        return view('book.create',compact('genres','authors'));
     }
 
     /**
@@ -35,12 +38,16 @@ class BookController extends Controller
         $imagePath = $request->file('image')->store('books','public');
         $data['image'] = $imagePath;
         $book = new Book();
-        $book->user_id = auth()->id();
+        if ($request->author){
+            $book->user_id = $request->author;
+        }else{
+            $book->user_id = auth()->id();
+        }
         $book->genre_id = $data['genre'];
         $book->title = $data['title'];
         $book->image = $data['image'];
         $book->page_number = $data['page_number'];
-        $book->publication_date = now();
+//        $book->publication_date = now();
         $book->description = $data['description'];
         if ($book->save()){
             return back()->with('success','New Book created successfully!');
@@ -82,25 +89,32 @@ class BookController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $book = Book::with(['genre','user'])->find($id);
+        $genres = Genre::all();
+        return view('book.edit',compact('book','genres'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateBookRequest $request, string $id)
     {
-        $data = $request->validated();
-        $product = Book::find($id);
-        $product->category_id = $request['category_id'];
-        $product->name = $data['name'];
-        $product->short_description = $data['description'];
-        if ($request->hasFile('picture')) {
-            $path = $request->file('picture')->store('public');
-            $product->picture = $path;
+        if ($request->validated()){
+            $data = $request->validated();
+            $book = Book::find($id);
+            $book->genre_id = $request['genre'];
+            $book->title = $data['title'];
+            $book->page_number = $data['page_number'];
+            $book->description = $data['description'];
+            if ($request->hasFile('image')) {
+                $path = $request->file('image')->store('public');
+                $book->image = $path;
+            }
+            $book->save();
+            return back()->with('success', 'Book updated successfully!');
         }
-        $product->save();
-        return back()->with('success','Product updated successfully!');
+        return back()->with('error', 'Oops, Something went wrong!');
+
     }
 
     /**

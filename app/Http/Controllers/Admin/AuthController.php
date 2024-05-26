@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 
 class AuthController extends Controller
 {
@@ -31,6 +32,7 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
+        Cache::forget('user-is-online-' . Auth::user()->id);
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();

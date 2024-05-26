@@ -24,7 +24,7 @@ class UpdateBookRequest extends FormRequest
         return [
             "genre"=>"required",
             "title"=>"required",
-            "image"=>"required",
+            "image"=>"nullable",
             "page_number"=>"required",
             "description"=>"required",
         ];

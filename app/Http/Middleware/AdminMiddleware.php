@@ -16,9 +16,23 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!Auth::check() || (Auth::user()->roles !== 'admin' || Auth::user()->roles !== 'superadmin')) {
-            return redirect()->route('login')->with('error', 'You do not have admin access.');
+        if ((Auth::check() && Auth::user()->role->name === 'superadmin')||(Auth::check() && Auth::user()->role->name === 'admin')) {
+            return $next($request);
         }
-        return $next($request);
+        return redirect()->to('/')->with('error', 'You do not have admin access.');
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

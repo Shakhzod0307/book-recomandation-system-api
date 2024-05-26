@@ -29,23 +29,24 @@ class GenrePolicy
      */
     public function create(User $user): bool
     {
-        //
+        return $user->role->name === 'admin' || $user->role->name === 'superadmin';
+
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Genre $genre): bool
+    public function update(User $user): bool
     {
-        //
+        return $user->role->name === 'superadmin';
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Genre $genre): bool
+    public function delete(User $user): bool
     {
-        //
+        return $user->role->name === 'superadmin';
     }
 
     /**

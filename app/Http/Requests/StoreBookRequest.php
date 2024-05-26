@@ -23,6 +23,7 @@ class StoreBookRequest extends FormRequest
     {
         return [
             "genre"=>"required",
+            "author"=>"nullable",
             "title"=>"required",
             "image"=>"required",
             "page_number"=>"required",
