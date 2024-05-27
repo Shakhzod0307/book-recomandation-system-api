@@ -22,7 +22,12 @@
                             {{$book->title}}
                         </h3>
                         <p class="paragraph-normal text-gray-600 font-bold">
+                            @if($book->new_author !==null)
+                                Author: {{$book->new_author}}
+                            @else
                             Author: {{$book->user->name}}
+                            @endif
+
                         </p>
                         <a class="mt-3 block" href="{{route('books.show',$book->id)}}">Read More >></a>
                     </div>

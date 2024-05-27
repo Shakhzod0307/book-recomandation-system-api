@@ -27,7 +27,12 @@
                 <time class="font-bold text-red-500">Title: {{$book->title}}</time>
             </p>
             <p class="mb-1 text-lg text-primary-500">
-                <time class="font-bold text-blue-500">Author: </time>{{$book->user->name}}<br>
+                <time class="font-bold text-blue-500">Author: </time>
+                @if($book->new_author !==null)
+                    {{$book->new_author}}
+                @else
+                     {{$book->user->name}}
+                @endif<br>
                 <time class="font-bold text-blue-500">Page number: </time>{{$book->page_number}}
             </p>
             <h3 class="text-xl font-medium text-gray-900">
@@ -143,9 +148,21 @@
                         <label for="take_time" class="block text-gray-700">Take Time</label>
                         <input type="text" name="take_time" id="take_time" class="title bg-gray-100 border  p-2 mb-4 outline-none  w-full border-gray-300 rounded-lg">
                     </div>
-                    <div class="mb-1">
+                    <div class="mb-4">
                         <label for="type" class="block text-gray-700">Type</label>
-                        <input type="text" name="type" id="type" placeholder="Online or Offline" class="title bg-gray-100 border  p-2 mb-4 outline-none  w-full border-gray-300 rounded-lg">
+                        <select name="type" required id="type" class="border text-gray-600 h-10 pl-5 pr-10 bg-white hover:border-gray-400 focus:outline-none appearance-none w-full border-gray-300 rounded-lg">
+                            <option value="Online">Online</option>
+                            <option value="Offline">Offline</option>
+                        </select>
+                    </div>
+                    <div class="mb-4">
+                        <label for="type" class="block text-gray-700">User</label>
+                        <select name="user_id" required id="type" class="border text-gray-600 h-10 pl-5 pr-10 bg-white hover:border-gray-400 focus:outline-none appearance-none w-full border-gray-300 rounded-lg">
+                                <option value="{{auth()->id()}}">{{auth()->user()->name}}</option>
+                        @foreach($users as $user)
+                                <option value="{{$user->id}}">{{$user->name}}</option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="mb-1">
                         <label for="comment" class="block text-gray-700">Feedback</label>

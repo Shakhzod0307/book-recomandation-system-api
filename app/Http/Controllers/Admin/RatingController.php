@@ -12,7 +12,7 @@ class RatingController extends Controller
     public function store(StoreRatingRequest $request)
     {
         $rating = Rating::create([
-            'user_id'=>auth()->id(),
+            'user_id'=>$request->user_id,
             'book_id'=>$request->book_id,
             'rating'=>$request->rating,
             'take_time'=>$request->take_time,

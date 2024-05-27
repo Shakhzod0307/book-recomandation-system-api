@@ -35,15 +35,27 @@ class BookController extends Controller
     public function store(StoreBookRequest $request)
     {
         $data = $request->validated();
+//        dd($data);
         $imagePath = $request->file('image')->store('books','public');
         $data['image'] = $imagePath;
         $book = new Book();
         if ($request->author){
-            $book->user_id = $request->author;
-        }else{
+            $book->user_id = $data['author'];
+        }elseif ($request->new_author){
+            $book->user_id = auth()->id();
+            $book->new_author = $data['new_author'];
+        }
+        else{
             $book->user_id = auth()->id();
         }
-        $book->genre_id = $data['genre'];
+        if ($request->genre){
+            $book->genre_id = $data['genre'];
+        }else {
+            $new_genre = Genre::create([
+                'category'=>$data['new_genre']
+            ]);
+            $book->genre_id = $new_genre->id;
+        }
         $book->title = $data['title'];
         $book->image = $data['image'];
         $book->page_number = $data['page_number'];
@@ -61,6 +73,7 @@ class BookController extends Controller
     public function show(string $id)
     {
         $book = Book::with(['genre','user','ratings'])->find($id);
+        $users = User::all();
         $counts =$book->ratings->count();
         if ($counts>0) {
             $rating5 = $book->ratings->where('rating', 5)->count();
@@ -81,7 +94,7 @@ class BookController extends Controller
             $percent1 =0;
         }
 //        dd($counts,$rating5,$percent5,$rating4,$percent4,$rating3,$percent3,$rating2,$percent2,$rating1,$percent1);
-        return view('book.show',compact('book','counts','percent1','percent2','percent3','percent4','percent5'));
+        return view('book.show',compact('book','users','counts','percent1','percent2','percent3','percent4','percent5'));
     }
 
     /**

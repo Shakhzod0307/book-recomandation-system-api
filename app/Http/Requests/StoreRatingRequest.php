@@ -23,6 +23,7 @@ class StoreRatingRequest extends FormRequest
     {
         return [
             'book_id'=>'required',
+            'user_id'=>'required',
             'rating'=>'required',
             'take_time'=>'required',
             'type'=>'required',

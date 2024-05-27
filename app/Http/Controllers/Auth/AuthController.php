@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Models\UserInterest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 
@@ -23,9 +24,13 @@ class AuthController extends Controller
                 'email' => ['The provided credentials are incorrect.'],
             ]);
         }
+        Auth::login($user);
+        $expiresAt = now()->addMinutes(10);
+        Cache::put('user-is-online-' . Auth::user()->id, true, $expiresAt);
         return response()->json([
             'token'=>$user->createToken($user->name)->plainTextToken
-        ]);    }
+        ]);
+    }
 
     public function register(RegisterRequest $request)
     {
@@ -46,13 +51,16 @@ class AuthController extends Controller
             'book_rating'=>$request->book_rating,
             'comment'=>$request->comment
         ]);
+//        Auth::login($user);
         return response()->json([
             'token'=>$user->createToken($user->name)->plainTextToken
         ]);
     }
-    public function logout()
+    public function logout(Request $request)
     {
-        Auth::user()->tokens()->delete();
+        $user = Auth::user();
+        $request->user()->currentAccessToken()->delete();
+        Cache::forget('user-is-online-' . $user->id);
         return response()->json(['message' => 'Logged out successfully']);
     }
 }

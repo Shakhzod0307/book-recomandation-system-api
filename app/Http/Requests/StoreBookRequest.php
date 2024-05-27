@@ -22,8 +22,10 @@ class StoreBookRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "genre"=>"required",
+            "genre"=>"nullable",
+            'new_genre'=>'nullable',
             "author"=>"nullable",
+            "new_author"=>"nullable",
             "title"=>"required",
             "image"=>"required",
             "page_number"=>"required",

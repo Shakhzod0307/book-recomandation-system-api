@@ -41,14 +41,14 @@ class UserController extends Controller
             $user->role_id = $request['role'];
             $user->profession = $data['profession'];
             $user->email = $data['email'];
-            $user->password = Hash::make($data['email']);
+            $user->password = Hash::make($data['password']);
             $user->bio = $data['bio'];
             if ($request->hasFile('photo')) {
                 $path = $request->file('photo')->store('users','public');
                 $user->photo = $path;
             }
             $user->save();
-            return back()->with('success', 'New User addedd successfully!');
+            return back()->with('success', 'New User added successfully!');
         }
         return back()->with('error', 'Oops, Something went wrong!');
     }
