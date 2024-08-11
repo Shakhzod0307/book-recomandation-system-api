@@ -21,5 +21,7 @@ Route::middleware(['auth',AdminMiddleware::class,UserStatus::class])->prefix('ad
     Route::resource('roles',RoleController::class);
     Route::resource('users',UserController::class);
     Route::post('post-rating',[RatingController::class,'store'])->name('store.rating');
+    Route::get('/books/download/{id}', [BookController::class, 'download'])->name('books.download');
+
 });
 

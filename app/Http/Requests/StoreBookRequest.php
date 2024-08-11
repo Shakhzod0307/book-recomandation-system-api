@@ -28,6 +28,7 @@ class StoreBookRequest extends FormRequest
             "new_author"=>"nullable",
             "title"=>"required",
             "image"=>"required",
+            "file_path"=>"required",
             "page_number"=>"required",
             "description"=>"required",
         ];

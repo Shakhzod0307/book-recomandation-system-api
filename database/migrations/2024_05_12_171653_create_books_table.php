@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('new_author')->nullable();
             $table->text('title');
             $table->string('image');
+            $table->string('file_path')->nullable();
             $table->text('description');
             $table->text('page_number');
             $table->timestamps();

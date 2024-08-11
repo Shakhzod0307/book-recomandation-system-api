@@ -12,7 +12,7 @@ class GenreController extends Controller
 
     public function index()
     {
-        return GenreResource::collection(Genre::all());
+        return GenreResource::collection(Genre::all())->all();
     }
 
     public function store(StoreGenreRequest $request)

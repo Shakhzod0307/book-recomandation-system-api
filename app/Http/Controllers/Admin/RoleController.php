@@ -7,6 +7,7 @@ use App\Http\Requests\StoreRoleRequest;
 use App\Http\Requests\UpdateRoleRequest;
 use App\Models\Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class RoleController extends Controller
 {
@@ -24,6 +25,7 @@ class RoleController extends Controller
      */
     public function create()
     {
+        Gate::authorize('create',Role::class);
         return view('roles.create');
     }
 
@@ -32,6 +34,7 @@ class RoleController extends Controller
      */
     public function store(StoreRoleRequest $request)
     {
+        Gate::authorize('create',Role::class);
         Role::create($request->all());
         return redirect()->back()->with('success','New Role created successfully!');
     }
@@ -69,6 +72,7 @@ class RoleController extends Controller
      */
     public function destroy(string $id)
     {
+        Gate::authorize('delete',Role::class);
         Role::destroy($id);
         return redirect()->back()->with('success','Role deleted successfully!');
 

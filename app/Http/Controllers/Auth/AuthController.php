@@ -34,13 +34,14 @@ class AuthController extends Controller
 
     public function register(RegisterRequest $request)
     {
-        $user = User::create([
-            'role_id'=> $request->role,
-            'name'=> $request->name,
-            'profession'=>$request->profession,
-            'email'=>$request->email,
-            'password'=>Hash::make($request->password)
-        ]);
+//        dd($request->role);
+        $user = new User();
+        $user->role_id=$request->role;
+        $user->name=$request->name;
+        $user->profession=$request->profession;
+        $user->email=$request->email;
+        $user->password=Hash::make($request->password);
+        $user->save();
 //        $user->roles()->attach($request->role);
         UserInterest::create([
             'user_id'=>$user->id,
@@ -51,7 +52,9 @@ class AuthController extends Controller
             'book_rating'=>$request->book_rating,
             'comment'=>$request->comment
         ]);
-//        Auth::login($user);
+        Auth::login($user);
+        $expiresAt = now()->addMinutes(10);
+        Cache::put('user-is-online-' . Auth::user()->id, true, $expiresAt);
         return response()->json([
             'token'=>$user->createToken($user->name)->plainTextToken
         ]);

@@ -36,8 +36,10 @@ class BookController extends Controller
     {
         $data = $request->validated();
 //        dd($data);
-        $imagePath = $request->file('image')->store('books','public');
+        $imagePath = $request->file('image')->store('public');
+        $file_path = $request->file('file_path')->store('public');
         $data['image'] = $imagePath;
+        $data['file_path'] = $file_path;
         $book = new Book();
         if ($request->author){
             $book->user_id = $data['author'];
@@ -58,6 +60,7 @@ class BookController extends Controller
         }
         $book->title = $data['title'];
         $book->image = $data['image'];
+        $book->file_path = $data['file_path'];
         $book->page_number = $data['page_number'];
 //        $book->publication_date = now();
         $book->description = $data['description'];
@@ -67,9 +70,6 @@ class BookController extends Controller
         return back()->with('error','Oops, Something went wrong!');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         $book = Book::with(['genre','user','ratings'])->find($id);
@@ -97,9 +97,6 @@ class BookController extends Controller
         return view('book.show',compact('book','users','counts','percent1','percent2','percent3','percent4','percent5'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
         $book = Book::with(['genre','user'])->find($id);
@@ -107,9 +104,7 @@ class BookController extends Controller
         return view('book.edit',compact('book','genres'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+
     public function update(UpdateBookRequest $request, string $id)
     {
         if ($request->validated()){
@@ -130,12 +125,17 @@ class BookController extends Controller
 
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+
     public function destroy(string $id)
     {
         Book::destroy($id);
         return redirect()->route('books.index')->with('success','Book deleted successfully!');
+    }
+
+    public function download($id)
+    {
+        $book = Book::findOrFail($id);
+        $filePath = storage_path('app/' . $book->file_path);
+        return response()->download($filePath, $book->title . '.pdf');
     }
 }

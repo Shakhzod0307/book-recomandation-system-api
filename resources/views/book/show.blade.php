@@ -41,6 +41,7 @@
             </h3>
             <div class="mt-4 flex gap-2">
                 <div class="flex items-center flex-wrap">
+                    <a href="{{route('books.download', $book->id)}}" class="bg-gradient-to-r from-green-400 to-green-400 hover:scale-105 drop-shadow-md mr-2  shadow-cla-green px-5 py-1 rounded-lg">Download</a>
                     <a href="{{route('books.edit',$book->id)}}" class="bg-gradient-to-r from-blue-400 to-blue-400 hover:scale-105 drop-shadow-md mr-2  shadow-cla-blue px-5 py-1 rounded-lg">Edit</a>
                     <form action="{{route('books.destroy',$book->id)}}" method="POST">
                         @csrf

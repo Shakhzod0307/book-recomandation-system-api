@@ -64,6 +64,9 @@
                     </div>
                 </template>
             </div>
+
+            <input class="file bg-gray-100 border border-gray-300 p-2 mb-4 outline-none" name="file_path" type="file" required>
+
             <div class="buttons flex justify-end">
                 <button class="btn border border-indigo-500 p-1 px-4 font-semibold cursor-pointer text-gray-200 ml-2 bg-indigo-500">Post</button>
             </div>

@@ -18,8 +18,8 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             UserInterestSeeder::class,
             GenreSeeder::class,
-            BookSeeder::class,
-            RatingSeeder::class,
+//            BookSeeder::class,
+//            RatingSeeder::class,
         ]);
 
 

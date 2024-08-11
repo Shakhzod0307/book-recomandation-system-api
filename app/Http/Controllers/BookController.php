@@ -20,6 +20,10 @@ class BookController extends Controller
             $books->where('title', 'like', '%' . $request->title . '%');
         }
 
+        if ($request->has('new_author')) {
+            $books->where('new_author', 'like', '%' . $request->new_author . '%');
+        }
+
         if ($request->has('author')) {
             $books->whereHas('user', function ($query) use ($request) {
                 $query->where('name', 'like', '%' . $request->author . '%');
@@ -41,7 +45,11 @@ class BookController extends Controller
         }
 
         $filteredBooks = $books->get();
-        return BookResource::collection($filteredBooks);
+        return  BookResource::collection($filteredBooks)->all();
+//        $booksArray = $filteredBooks->all();
+//
+//        return $booksArray;
+
     }
 
     public function store(StoreBookRequest $request)
@@ -70,7 +78,17 @@ class BookController extends Controller
 
     public function show(string $id)
     {
-        return new BookResource(Book::find($id));
+        $book = Book::find($id);
+
+        if (!$book) {
+            // Handle case where book is not found (e.g., return 404 Not Found)
+            return abort(404);
+        }
+
+        $bookResource = new BookResource($book);
+        $bookArray = $bookResource->toArray(Request::capture());
+
+        return $bookArray;
     }
 
     public function update(UpdateBookRequest $request, $id)
