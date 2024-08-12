@@ -2,7 +2,7 @@
 @section('content')
     <form action="{{ route('users.store') }}" method="POST" enctype="multipart/form-data" class="bg-white shadow p-4 py-8" x-data="{ images: [] }">
         @csrf
-        <div class="heading text-center font-bold text-2xl m-5 text-gray-800 bg-white">New Book</div>
+        <div class="heading text-center font-bold text-2xl m-5 text-gray-800 bg-white">New User</div>
         @if(session('success'))
             <div class="mb-4 text-green-600 text-center font-semibold">
                 {{ session('success') }}
