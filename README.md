@@ -66,4 +66,6 @@ This is a Book Recommendation System API with an accompanying admin panel, built
 <img src="public/screenshots/image4.png" alt="Screenshot of the application" height="400" width="700">
 <img src="public/screenshots/image5.png" alt="Screenshot of the application" height="400" width="700">
 <img src="public/screenshots/image6.png" alt="Screenshot of the application" height="400" width="700">
+<img src="public/screenshots/image7.png" alt="Screenshot of the application" height="400" width="700">
+<img src="public/screenshots/image8.png" alt="Screenshot of the application" height="400" width="700">
 
