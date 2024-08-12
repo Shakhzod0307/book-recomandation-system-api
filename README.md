@@ -57,5 +57,13 @@ This is a Book Recommendation System API with an accompanying admin panel, built
     - Password: admin123
 
 
+# Some screenshots
 
+
+<img src="public/screenshots/image1.png" alt="Screenshot of the application" height="400" width="700">
+<img src="public/screenshots/image2.png" alt="Screenshot of the application" height="400" width="700">
+<img src="public/screenshots/image3.png" alt="Screenshot of the application" height="400" width="700">
+<img src="public/screenshots/image4.png" alt="Screenshot of the application" height="400" width="700">
+<img src="public/screenshots/image5.png" alt="Screenshot of the application" height="400" width="700">
+<img src="public/screenshots/image6.png" alt="Screenshot of the application" height="400" width="700">
 
