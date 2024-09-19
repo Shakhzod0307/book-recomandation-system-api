@@ -105,6 +105,14 @@
                     <a href="{{route('users.create')}}" class="block px-2 py-1 hover:bg-gray-100">Add User</a>
                 </div>
             </div>
+{{--            chat--}}
+            <div x-data="{ open: false }">
+                <button @click="open = !open && !open" class="flex items-center space-x-1 rounded-md px-2 py-3 hover:bg-gray-100 hover:text-blue-600 w-full">
+                    <span class="text-2xl"><i class="bx bx-chat"></i></span>
+                    <a href="{{route('users.create')}}" class="block px-2 py-1 hover:bg-gray-100">Chat</a>
+
+                </button>
+            </div>
         </aside>
         <div class="w-full p-4">
             @yield('content')
